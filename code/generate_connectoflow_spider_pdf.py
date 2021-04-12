@@ -92,7 +92,7 @@ The key steps in this version of Connectoflow are:
     operations to ensure streamlines have terminations in the provided atlas. Moreover, connection-wise cleaning processes
     that remove loops, discard spurious streamlines and discard incoherent curvatures are used to remove as many false
     positives as possible [5].
-- COMMT: To further decrease the number of invalid streamlines and assign a quantitative weight to each streamline,
+- COMMIT: To further decrease the number of invalid streamlines and assign a quantitative weight to each streamline,
     Convex Optimization Modeling for Micro-structure Informed Tractography (COMMIT) [6,7] is used. This not only allows the
     removal of aberrant or spurious streamlines, but it was shown to increase reproducibility of connectivity measures by
     being more robust to various tractography biases. 

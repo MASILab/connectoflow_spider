@@ -9,7 +9,7 @@ The key steps in this version of Connectoflow are:
     operations to ensure streamlines have terminations in the provided atlas. Moreover, connection-wise cleaning processes
     that remove loops, discard spurious streamlines and discard incoherent curvatures are used to remove as many false
     positives as possible [5].
-- COMMT: To further decrease the number of invalid streamlines and assign a quantitative weight to each streamline,
+- COMMIT: To further decrease the number of invalid streamlines and assign a quantitative weight to each streamline,
     Convex Optimization Modeling for Micro-structure Informed Tractography (COMMIT) [6,7] is used. This not only allows the
     removal of aberrant or spurious streamlines, but it was shown to increase reproducibility of connectivity measures by
     being more robust to various tractography biases. 
@@ -17,22 +17,23 @@ The key steps in this version of Connectoflow are:
     (fixel), which can be computationally burdensome if done on every pairwise connection of the connectome a posteriori.
     This step will provide a AFD-weighted connectivity matrix.
 
+### References
     [1] Rheault, Francois, et al. "Connectoflow: A cutting-edge Nextflow pipeline for structural connectomics", ISMRM 2021 Proceedings, #710. 
-
+    
     [2] Di Tommaso, Paolo, et al. "Nextflow enables reproducible  computational workflows.", Nature biotechnology 35.4 (2017): 316-319. 
-
+    
     [3] Sotiropoulos, Stamatios N., and Andrew Zalesky. "Building connectomes using diffusion MRI: why, how and but.", NMR in Biomedicine 32.4 (2019): e3752.
-
+    
     [4] Yeh, Chun-Hung, et al. "Mapping structural connectivity using diffusion MRI: challenges and opportunities.", Journal of Magnetic Resonance Imaging (2020). 
-
+    
     [5] Zhang, Zhengwu, et al. "Mapping population-based structural connectomes.", NeuroImage 172 (2018): 130-145. 
-
+    
     [6] Daducci, Alessandro, et al. "COMMIT: convex optimization modeling for microstructure informed tractography.", IEEE transactions on medical imaging 34.1 (2014): 246-257. 
-
+    
     [7] Schiavi, Simona, et al. "A new method for accurate in vivo mapping of human brain connections using microstructural, and anatomical information." Science advances 6.31 (2020): eaba8245. 
-
+    
     [8] Raffelt, David A., et al. "Investigating white matter fibre density and morphology using fixel-based analysis.", Neuroimage 144 (2017): 58-73. 
-
+    
     [9] Dhollander, Thijs, et al. "Fixel-based Analysis of Diffusion MRI: Methods, Applications, Challenges and Opportunities." (2020).
 
 
