@@ -1,58 +1,84 @@
 
-# rbx_flow_spider
-RBX Flow Spider from XNAT
 
-RecobundlesX is a multi-atlas, multi-parameters version of Recobundles [1, 2]. It is optimized for whole brain coverage using 39 major well-known white matter pathways. The atlas is a customized population average from 20 UKBioBank [3] and 20 Human Connectome Project [4] datasets co-registered to MNI152 space.
+# connectoflow_spider
+Connectoflow Spider from XNAT
 
-This atlas was made to cover as much spatial extend as possible and explore as much shape variability as possible. Recobundles is when run 27 times with bundle-specific paramters and the results of each execution are used in a majority-vote approach. This is inspired from the state-of-the-art in medical images segmentation (before machine-learning) [5,6].
+Connectoflow [1] is Nextflow [2] pipeline to generate Connectomics [3,4] matrices from tractography data.
+The key steps in this version of Connectoflow are:
+- Decompose: This step performs the parcel-to-parcel decomposition of the tractogram. It includes streamline-cutting
+    operations to ensure streamlines have terminations in the provided atlas. Moreover, connection-wise cleaning processes
+    that remove loops, discard spurious streamlines and discard incoherent curvatures are used to remove as many false
+    positives as possible [5].
+- COMMT: To further decrease the number of invalid streamlines and assign a quantitative weight to each streamline,
+    Convex Optimization Modeling for Micro-structure Informed Tractography (COMMIT) [6,7] is used. This not only allows the
+    removal of aberrant or spurious streamlines, but it was shown to increase reproducibility of connectivity measures by
+    being more robust to various tractography biases. 
+- AFD: Apparent Fiber Density (AFD) [8,9] is subsequently computed connection-wise using streamline orientations
+    (fixel), which can be computationally burdensome if done on every pairwise connection of the connectome a posteriori.
+    This step will provide a AFD-weighted connectivity matrix.
 
-Then, a shape-based pruning is applied to each bundle to remove inconsistent or spurious streamlines (outliers) [7].
-See https://zenodo.org/record/4630660# for more details.
+    [1] Rheault, Francois, et al. "Connectoflow: A cutting-edge Nextflow pipeline for structural connectomics", ISMRM 2021 Proceedings, #710. 
 
-    [1] Garyfallidis, Eleftherios, et al. "Recognition of white matter bundles using local and global
-        streamline-based registration and clustering." NeuroImage 170 (2018): 283-295.
+    [2] Di Tommaso, Paolo, et al. "Nextflow enables reproducible  computational workflows.", Nature biotechnology 35.4 (2017): 316-319. 
 
-    [2] Rheault, François. "Analyse et reconstruction de faisceaux de la matière blanche." Computer Science
-        (Université de Sherbrooke) (2020), https://savoirs.usherbrooke.ca/handle/11143/17255
+    [3] Sotiropoulos, Stamatios N., and Andrew Zalesky. "Building connectomes using diffusion MRI: why, how and but.", NMR in Biomedicine 32.4 (2019): e3752.
 
-    [3] Sudlow, Cathie, et al. "UK biobank: an open access resource for identifying the causes of a wide range of complex
-        diseases of middle and old age." Plos med 12.3 (2015): e1001779.
+    [4] Yeh, Chun-Hung, et al. "Mapping structural connectivity using diffusion MRI: challenges and opportunities.", Journal of Magnetic Resonance Imaging (2020). 
 
-    [4] Van Essen, David C., et al. "The WU-Minn human connectome project: an overview." Neuroimage 80 (2013): 62-79.
+    [5] Zhang, Zhengwu, et al. "Mapping population-based structural connectomes.", NeuroImage 172 (2018): 130-145. 
 
-    [5] Iglesias, Juan Eugenio, and Mert R. Sabuncu. "Multi-atlas segmentation of biomedical images: a survey."
-        Medical image analysis 24.1 (2015): 205-219.
+    [6] Daducci, Alessandro, et al. "COMMIT: convex optimization modeling for microstructure informed tractography.", IEEE transactions on medical imaging 34.1 (2014): 246-257. 
 
-    [6] Pipitone, Jon, et al. "Multi-atlas segmentation of the whole hippocampus and subfields using multiple automatically
-        generated templates." Neuroimage 101 (2014): 494-512.
+    [7] Schiavi, Simona, et al. "A new method for accurate in vivo mapping of human brain connections using microstructural, and anatomical information." Science advances 6.31 (2020): eaba8245. 
 
-    [7] Côté, Marc-Alexandre, et al. "Cleaning up the mess: tractography outlier removal using hierarchical QuickBundles
-        clustering." 23rd ISMRM annual meeting. Toronto, Canada. 2015.
+    [8] Raffelt, David A., et al. "Investigating white matter fibre density and morphology using fixel-based analysis.", Neuroimage 144 (2017): 58-73. 
+
+    [9] Dhollander, Thijs, et al. "Fixel-based Analysis of Diffusion MRI: Methods, Applications, Challenges and Opportunities." (2020).
 
 
 ### Inputs
+- t1.nii.gz (from Slant)
+- labels.nii.gz (from Slant)
+- dwi_resampled.nii.gz (from Tractoflow)
+- dwi_resampled.nii.gz (from Tractoflow)
+- dwi.bval (from Tractoflow)
+- dwi.bvec (from Tractoflow)
+- fodf.nii.gz (from Tractoflow)
+- peaks.nii.gz (from Tractoflow)
+- fodf.nii.gz (from Tractoflow)
+- output0GenericAffine.mat (from Tractoflow)
+- output1Warp.nii.gz
+- output1InverseWarp.nii.gz
 - fa.nii.gz (from Tractoflow)
-- local_tracking.trk (from Tractoflow)
-- pft_tracking.trk (from Tractoflow)
-
-### Parameters
-- nb_run: 27
-- vote_ratio: 0.5
-
+- md.nii.gz (from Tractoflow)
+- rd.nii.gz (from Tractoflow)
+- ad.nii.gz (from Tractoflow)
+- nufo.nii.gz (from Tractoflow)
+- afd_total.nii.gz (from Tractoflow)
+- afd_sum.nii.gz (from Tractoflow)
+- afd_max.nii.gz (from Tractoflow)
+- ensemble.trk (from Tractoflow)
 
 ### Outputs
 **Reporting**
 - report.html
 - report.pdf
 
-**Bundles**
-- *_cleaned.trk
+**Connectivity matrices**
+- *.npy
 
-**Centroids**
-- *_centroids.trk
+**MNI space data**
+- mni_icbm152_nlin_asym_09c_t1_masked.nii.gz (template)
+- labels_warped_mni_int16.nii.gz
+- t1_mni.nii.gz
+- decompose_warped_mni.h5
+
+**Transforms to MNI**
+- output0GenericAffine.mat
+- output1Warp.nii.gz
+- output1InverseWarp.nii.gz
 
 ### Input assumptions and parameters choice
-Tractograms from Tractoflow should have at least 500k streamlines each
-RecobundlesX is robust to lesions/tumors IF the tractography was adapted for the situation
-nb_run is between 1 and 27
-vote_ratio is between 0 and 1
+Tractogram from Tractoflow should have at least 1M-2M streamlines
+Connectoflow is optimized for probabilistic tractography
+Connectoflow is robust to lesions/tumors IF the tractography was adapted for the situation AND Slant parcellations is valid
