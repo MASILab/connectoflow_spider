@@ -48,8 +48,7 @@ The key steps in this version of Connectoflow are:
 - peaks.nii.gz (from Tractoflow)
 - fodf.nii.gz (from Tractoflow)
 - output0GenericAffine.mat (from Tractoflow)
-- output1Warp.nii.gz
-- output1InverseWarp.nii.gz
+- output1Warp.nii.gz (from Tractoflow)
 - fa.nii.gz (from Tractoflow)
 - md.nii.gz (from Tractoflow)
 - rd.nii.gz (from Tractoflow)
@@ -83,3 +82,4 @@ The key steps in this version of Connectoflow are:
 Tractogram from Tractoflow should have at least 1M-2M streamlines
 Connectoflow is optimized for probabilistic tractography
 Connectoflow is robust to lesions/tumors IF the tractography was adapted for the situation AND Slant parcellations is valid
+This pipeline does not perform any statistical analysis, this should be planned separately beforehand
