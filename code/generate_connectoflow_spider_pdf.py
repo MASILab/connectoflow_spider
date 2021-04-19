@@ -137,15 +137,15 @@ pdf.add_mosaic('Matrices',
                ['streamlines count weighted', 'volume weighted'],
                ['results_conn/{}/Visualize_Connectivity/sc_matrix.png'.format(sys.argv[1]),
                 'results_conn/{}/Visualize_Connectivity/vol_matrix.png'.format(sys.argv[1])],
-               col=2, pos_x=20)
+               col=2, pos_x=20, size_x=65, size_y=65)
 pdf.add_mosaic('',
                ['length weighted', 'FA weighted'],
                ['results_conn/{}/Visualize_Connectivity/len_matrix.png'.format(sys.argv[1]),
                 'results_conn/{}/Visualize_Connectivity/fa_matrix.png'.format(sys.argv[1])],
-               col=2, pos_x=20)
+               col=2, pos_x=20, size_x=65, size_y=65)
 pdf.add_mosaic('',
                ['COMMIT weighted', 'AFD weighted'],
                ['results_conn/{}/Visualize_Connectivity/commit2_weights_matrix.png'.format(sys.argv[1]),
                 'results_conn/{}/Visualize_Connectivity/afd_fixel_matrix.png'.format(sys.argv[1])],
-               col=2, pos_x=20)
+               col=2, pos_x=20, size_x=65, size_y=65)
 pdf.output('report.pdf', 'F')
