@@ -37,7 +37,7 @@ python3.7 /CODE/get_labels_list.py raw/${N_SUBJ}_${N_SESS}/labels.nii.gz labels_
 
 # Launch pipeline
 /nextflow /connectoflow/main.nf --input raw/ --template /mni_icbm152_nlin_asym_09c_t1_masked.nii.gz \
-	--labels_list labels_list.txt --use_similarity_metric false \
+	--labels_list labels_list.txt --use_similarity_metric false --use_commit2 \
 	--processes_register 1 --processes_commit 1 --processes_afd_rd 1 --processes_connectivity 1 --processes 1 \
 	-resume -with-report report.html
 

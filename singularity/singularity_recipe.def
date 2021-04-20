@@ -11,7 +11,7 @@ From: scilus/singularity-base-tractoflow
 
     git clone https://github.com/frheault/connectoflow.git $SINGULARITY_ROOTFS/connectoflow/
     cd $SINGULARITY_ROOTFS/connectoflow/
-    git checkout 5e6b710
+    git checkout 29f29a2
     sed -i 's/scratch = true/scratch = false/g' $SINGULARITY_ROOTFS/connectoflow/nextflow.config
     
 %post

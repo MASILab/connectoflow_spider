@@ -195,7 +195,7 @@ command: >-
   {labels}
 attrs:
   xsitype: proc:genProcData
-  walltime: "72:00:00"
+  walltime: "12:00:00"
   memory: 16384
   ppn: 1
 
