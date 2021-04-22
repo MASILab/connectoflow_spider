@@ -1,26 +1,24 @@
 ---
 moreauto: true
-procversion: 1.0.0??
-procname: connectoflow??
+procversion: 1.0.0
+procname: connectoflow
 
 inputs:
   default:
-    container_path: ??simg
-
+    container_path: connectoflow_v1.0.0.simg
   xnat:
     scans:
       - name: scan_t1
         types: T1,MPRAGE,T1w,T1_3DAXIAL,MPRAGE_SIEMENS_DEFACED
         resources:
           - resource: NIFTI
-            varname: t1_file
-            fmatch: '*'
-            fcount: 1
-            fdest: t1.nii.gz
             ftype: FILE
+            varname: t1_file
+            fdest: t1.nii.gz
+            fmatch: '*.nii.gz'
     assessors:
-      - name: assr_slant??
-        proctypes: slant_cpu_v1??
+      - name: assr_slant
+        proctypes: slant_v1
         needs_qc: False
         resources:
           - resource: SEG
@@ -30,7 +28,7 @@ inputs:
             ftype: FILE
             varname: label
       - name: assr_tractoflow
-        proctypes: tractoflow_v1.0.0
+        proctypes: tractoflow_v1
         needs_qc: False
         resources:
           - resource: DWI_FILES
@@ -152,7 +150,7 @@ outputs:
   - path: '*__labels_warped_mni_int16.nii.gz'
     type: FILE
     resource: REG_IMAGES
-  - path: 't1_mni.nii.gz'
+  - path: '*__t1_mni.nii.gz'
     type: FILE
     resource: REG_IMAGES
   - path: '*__output0GenericAffine.mat'
@@ -174,12 +172,12 @@ outputs:
 command: >-
   singularity run
   --home $JOBDIR
+  --bind $JOBDIR:/tmp
   --containall
   --cleanenv
   --bind $INDIR:/INPUTS
   --bind  $OUTDIR:/OUTPUTS
   --bind $JOBDIR:/TMP
-  --bind $JOBDIR:/tmp
   {container_path}
   {subject}
   {session}
@@ -192,7 +190,8 @@ command: >-
   {warp}
   {ensemble_tracking}
   {t1_file}
-  {labels}
+  {label}
+
 attrs:
   xsitype: proc:genProcData
   walltime: "72:00:00"
@@ -200,3 +199,4 @@ attrs:
   ppn: 1
 
 jobtemplate: job_template.txt
+
