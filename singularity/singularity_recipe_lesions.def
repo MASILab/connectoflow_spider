@@ -87,6 +87,6 @@ From: ubuntu:bionic
     mkdir -p /INPUTS && chmod 755 /INPUTS 
     mkdir -p /OUTPUTS && chmod 775 /OUTPUTS
     mkdir -p /TMP && chmod 775 /TMP
-	
+    
 %runscript
-    xvfb-run -a --server-num=$((65536+$$)) --server-args="-screen 0 1600x1280x24 -ac" bash /CODE/launch_connectoflow_wrapper.sh /INPUTS /OUTPUTS "$@"
+    xvfb-run -a --server-num=$((65536+$$)) --server-args="-screen 0 1600x1280x24 -ac" bash /CODE/launch_connectoflow_wrapper_lesions.sh /INPUTS /OUTPUTS "$@"

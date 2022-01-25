@@ -14,6 +14,7 @@ IN_WARP=${11}
 IN_ENSEMBLE=${12}
 IN_T1=${13}
 IN_LABELS=${14}
+IN_LESIONS=${15}
 
 # Prepare input for Connectoflow
 cd /TMP/
@@ -26,6 +27,7 @@ cp ${IN_DIR}/${IN_FODF} raw/${N_SUBJ}_${N_SESS}/fodf.nii.gz
 cp ${IN_DIR}/${IN_AFF} raw/${N_SUBJ}_${N_SESS}/output0GenericAffine.mat
 cp ${IN_DIR}/${IN_WARP} raw/${N_SUBJ}_${N_SESS}/output1Warp.nii.gz
 cp ${IN_DIR}/${IN_ENSEMBLE} raw/${N_SUBJ}_${N_SESS}/tracking.trk
+cp ${IN_DIR}/${IN_LESIONS} raw/${N_SUBJ}_${N_SESS}/lesion_mask.nii.gz
 for i in ${IN_DIR}/metrics_*.nii.gz; do base_name=$(basename $i); cp ${i} raw/${N_SUBJ}_${N_SESS}/metrics/${base_name/metrics_/}; done
 
 # Data from Slant must be slightly modified for Connectoflow
