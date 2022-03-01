@@ -6,6 +6,7 @@ procname: connectoflow
 inputs:
   default:
     container_path: connectoflow_v1.0.0.simg
+    labels_to_remove: "4 40 41 44 45 51 52"
   xnat:
     scans:
       - name: scan_t1
@@ -191,6 +192,7 @@ command: >-
   {ensemble_tracking}
   {t1_file}
   {label}
+  {labels_to_remove}
 
 attrs:
   xsitype: proc:genProcData

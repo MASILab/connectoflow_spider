@@ -15,6 +15,7 @@ IN_ENSEMBLE=${12}
 IN_T1=${13}
 IN_LABELS=${14}
 IN_LESIONS=${15}
+IN_LABELS_TO_REMOVE=${16}
 
 # Prepare input for Connectoflow
 cd /TMP/
@@ -34,7 +35,7 @@ for i in ${IN_DIR}/metrics_*.nii.gz; do base_name=$(basename $i); cp ${i} raw/${
 scil_image_math.py lower_threshold ${IN_DIR}/${IN_LABELS} 0.01 brain_mask.nii.gz --data_type uint8
 scil_image_math.py multiplication brain_mask.nii.gz ${IN_DIR}/${IN_T1} raw/${N_SUBJ}_${N_SESS}/t1.nii.gz --data_type float32
 scil_image_math.py convert ${IN_DIR}/${IN_LABELS} raw/${N_SUBJ}_${N_SESS}/labels.nii.gz --data_type uint16
-scil_remove_labels.py raw/${N_SUBJ}_${N_SESS}/labels.nii.gz raw/${N_SUBJ}_${N_SESS}/labels.nii.gz -f -i 4 40 41 44 45 51 52
+scil_remove_labels.py raw/${N_SUBJ}_${N_SESS}/labels.nii.gz raw/${N_SUBJ}_${N_SESS}/labels.nii.gz -f -i ${IN_LABELS_TO_REMOVE}
 scil_dilate_labels.py raw/${N_SUBJ}_${N_SESS}/labels.nii.gz raw/${N_SUBJ}_${N_SESS}/labels.nii.gz -f --mask brain_mask.nii.gz
 python3.8 /CODE/get_labels_list.py raw/${N_SUBJ}_${N_SESS}/labels.nii.gz labels_list.txt
 

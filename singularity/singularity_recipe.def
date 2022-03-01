@@ -5,6 +5,10 @@ From: ubuntu:bionic
     export MATPLOTLIBRC="/usr/local/lib/python3.8/dist-packages/matplotlib/mpl-data/"
     export ANTSPATH=/opt/ANTs/bin/
     export PATH=$PATH:$ANTSPATH
+    export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
+    export OPENBLAS_NUM_THREADS=1
+    export OMP_NUM_THREADS=1
+
 %setup
     mkdir $SINGULARITY_ROOTFS/pybin $SINGULARITY_ROOTFS/CODE/
     cp ../code/* $SINGULARITY_ROOTFS/CODE/
@@ -13,6 +17,7 @@ From: ubuntu:bionic
     git clone https://github.com/scilus/connectoflow.git $SINGULARITY_ROOTFS/connectoflow/
     cd $SINGULARITY_ROOTFS/connectoflow/
     sed -i 's/scratch = true/scratch = false/g' $SINGULARITY_ROOTFS/connectoflow/nextflow.config
+    sed -i 's/python3/python3.8/g' $SINGULARITY_ROOTFS/connectoflow/main.nf
     
 %post
     apt-get update
@@ -46,7 +51,7 @@ From: ubuntu:bionic
     pip install fpdf
     pip install freetype-py pypng
     pip install numpy==1.20.* --no-binary numpy
-    pip install -e git://github.com/frheault/scilpy.git@9f3ebc2#egg=scilpy
+    pip install -e git://github.com/scilus/scilpy.git@45d4123#egg=scilpy
     sed -i '41s/.*/backend : Agg/' /usr/local/lib/python3.8/dist-packages/matplotlib/mpl-data/matplotlibrc
 
     wget https://github.com/nextflow-io/nextflow/releases/download/v19.04.0/nextflow-19.04.0-all
